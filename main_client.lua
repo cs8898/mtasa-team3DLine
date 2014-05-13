@@ -1,19 +1,15 @@
---local localplayer = getLocalPlayer()
---dofile("./settings.lua")
 local team
 local teamMates
 local teamMatesPos
 local tR, tG, tB
 local active = false
-local distance = 20
---local autostart = true
-local command = "teamline"
-local width = 2
---outputChatBox(distance)
 
---if autostart then
-	--init()
---end
+--Settings
+local distance = 20 --distance between teammates (20)
+local autostart = true --start on join (true)
+local command = "teamline" --command for switch on / off ("teamline")
+local width = 1 --line width (1)
+
 
 function init()
 	if not active then
@@ -46,3 +42,11 @@ function draw()
 end
 
 addCommandHandler ( command, init)
+
+addEventHandler( "onClientResourceStart", getRootElement( ),
+    function ( startedRes )
+        if startedRes == getThisResource() and autostart then
+		init()
+        end
+    end
+);
